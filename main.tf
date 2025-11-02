@@ -16,6 +16,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  skip_provider_registration = true
 }
 
 variable "ghcr_token" {
@@ -71,3 +72,4 @@ resource "azurerm_linux_web_app" "app" {
 output "webapp_url" {
   value = azurerm_linux_web_app.app.default_hostname
 }
+
