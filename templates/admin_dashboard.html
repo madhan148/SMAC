@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+<h2>Admin Dashboard - Manage Colleges</h2>
+<p><a href="{{ url_for('add_college') }}">Add College User</a></p>
+<table border="1" cellpadding="4">
+    <tr>
+        <th>Username</th>
+        <th>Verified</th>
+        <th>Actions</th>
+    </tr>
+    {% for info in colleges %}
+    <tr>
+        <td>{{ info.username }}</td>
+        <td>{{ 'Yes' if info.get('verified', False) else 'No' }}</td>
+        <td>
+            {% if not info.get('verified', False) %}
+            <a href="{{ url_for('verify_college', username=info.username) }}">Verify</a>
+            {% else %}
+            Verified
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

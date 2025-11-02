@@ -1,0 +1,70 @@
+/* Styles for Student Dashboard */
+h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+p {
+    max-width: 800px;
+    margin: 0 auto 15px;
+    background-color: white;
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+p strong {
+    color: #667eea;
+    display: inline-block;
+    min-width: 150px;
+}
+
+p a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+p a:hover {
+    color: #5568d3;
+    text-decoration: underline;
+}
+
+/* Special styling for the Edit/Fill Application link */
+p:last-child {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    font-size: 18px;
+}
+
+p:last-child a {
+    background-color: #667eea;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+p:last-child a:hover {
+    background-color: #5568d3;
+    text-decoration: none;
+}

@@ -1,0 +1,76 @@
+/* Styles for College Dashboard */
+h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+p {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: white;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+th {
+    background-color: #667eea;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin: 0 5px;
+}
+
+td a:hover {
+    color: #5568d3;
+    text-decoration: underline;
+}
+
+td a[href*="approve"] {
+    color: #4CAF50;
+}
+
+td a[href*="approve"]:hover {
+    color: #45a049;
+}
+
+td a[href*="reject"] {
+    color: #f44336;
+}
+
+td a[href*="reject"]:hover {
+    color: #da190b;
+}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+
+<h2>Student Dashboard</h2>
+
+{% if application %}
+    <h3>Your Application Status: {{ application.status }}</h3>
+    <p><strong>Full Name:</strong> {{ application.fullname }}</p>
+    <p><strong>Date of Birth:</strong> {{ application.dob }}</p>
+    <p><strong>Email:</strong> {{ application.email }}</p>
+    <p><strong>Phone:</strong> {{ application.phone }}</p>
+    <p><strong>Father's Name:</strong> {{ application.father_name }}</p>
+    <p><strong>Mother's Name:</strong> {{ application.mother_name }}</p>
+    <p><strong>Address:</strong> {{ application.address }}</p>
+    <p><strong>10th Marks:</strong> {{ application.marks_10th }}</p>
+    <p><strong>12th Marks:</strong> {{ application.marks_12th }}</p>
+    <p><strong>10th Marksheet:</strong> 
+        <a href="{{ url_for('uploaded_file', filename=application.marksheet_10th) }}" target="_blank">View file</a>
+    </p>
+    <p><strong>12th Marksheet:</strong> 
+        <a href="{{ url_for('uploaded_file', filename=application.marksheet_12th) }}" target="_blank">View file</a>
+    </p>
+    <p><a href="{{ url_for('admission_form') }}">Edit Application</a></p>
+{% else %}
+    <p>You have not submitted an application yet.</p>
+    <p><a href="{{ url_for('admission_form') }}">Fill Admission Form</a></p>
+{% endif %}
+
+<hr>
+<h3>Admission Query Chatbot</h3>
+
+<div id="chat-container" style="max-width: 700px; margin: 0 auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+    <div id="chat-box" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px; background: #f9f9f9;"></div>
+
+    <form id="chat-form" style="margin-top: 10px;">
+        <input type="text" id="user-input" placeholder="Ask your admission question..." style="width: 80%; padding: 10px; font-size: 16px;" required />
+        <button type="submit" style="width: 18%; padding: 10px; font-size: 16px; background-color: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Send</button>
+    </form>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+
+    function appendMessage(message, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.marginBottom = '10px';
+        msgDiv.style.padding = '8px 12px';
+        msgDiv.style.borderRadius = '15px';
+        msgDiv.style.maxWidth = '80%';
+
+        if (sender === 'user') {
+            msgDiv.style.backgroundColor = '#667eea';
+            msgDiv.style.color = 'white';
+            msgDiv.style.alignSelf = 'flex-end';
+            msgDiv.style.marginLeft = 'auto';
+        } else {
+            // AI
+            msgDiv.style.backgroundColor = '#e2e2e2';
+            msgDiv.style.color = '#333';
+            msgDiv.style.alignSelf = 'flex-start';
+            msgDiv.style.marginRight = 'auto';
+        }
+
+        msgDiv.textContent = message;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        appendMessage(message, 'user');
+        userInput.value = '';
+        userInput.disabled = true;
+
+        appendMessage('Typing...', 'ai');
+
+        try {
+            const response = await fetch('{{ url_for("chatbot") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message }),
+            });
+
+            const data = await response.json();
+
+            // Remove "Typing..." message
+            const typingMsg = Array.from(chatBox.children).find(div => div.textContent === 'Typing...');
+            if (typingMsg) typingMsg.remove();
+
+            if (response.ok) {
+                appendMessage(data.reply, 'ai');
+            } else {
+                appendMessage('Error: ' + (data.error || 'Failed to get response'), 'ai');
+            }
+        } catch (error) {
+            appendMessage('Error: ' + error.message, 'ai');
+        } finally {
+            userInput.disabled = false;
+            userInput.focus();
+        }
+    });
+</script>
+
+{% endblock %}

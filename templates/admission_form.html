@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admission_form.css') }}">
+<h2>Admission Form</h2>
+<form method="post" enctype="multipart/form-data">
+    <label>Full Name:</label><br>
+    <input type="text" name="fullname" required><br>
+
+    <label>Date of Birth:</label><br>
+    <input type="date" name="dob" required><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br>
+
+    <label>Phone:</label><br>
+    <input type="text" name="phone" required><br>
+
+    <label>Father's Name:</label><br>
+    <input type="text" name="father_name" required><br>
+
+    <label>Mother's Name:</label><br>
+    <input type="text" name="mother_name" required><br>
+
+    <label>Address:</label><br>
+    <textarea name="address" required></textarea><br>
+
+    <label>Upload 10th Marksheet (pdf/png/jpg/jpeg):</label><br>
+    <input type="file" name="marksheet_10th" required><br>
+
+    <label>10th Marks (out of 500):</label><br>
+    <input type="number" name="marks_10th" min="0" max="500" required><br>
+
+    <label>Upload 12th Marksheet (pdf/png/jpg/jpeg):</label><br>
+    <input type="file" name="marksheet_12th" required><br>
+
+    <label>12th Marks (out of 600):</label><br>
+    <input type="number" name="marks_12th" min="0" max="600" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/college_dashboard.css') }}">
+<h2>College Dashboard</h2>
+{% if applications %}
+    <table border="1" cellpadding="4">
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>10th Marksheet</th>
+            <th>12th Marksheet</th>
+            <th>Actions</th>
+        </tr>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.username }}</td>
+            <td>{{ app.fullname }}</td>
+            <td>{{ app.email }}</td>
+            <td>{{ app.phone }}</td>
+            <td>{{ app.status }}</td>
+            <td><a href="{{ url_for('uploaded_file', filename=app.marksheet_10th) }}" target="_blank">View 10th</a></td>
+            <td><a href="{{ url_for('uploaded_file', filename=app.marksheet_12th) }}" target="_blank">View 12th</a></td>
+            <td>
+                {% if app.status == 'Pending' %}
+                    <a href="{{ url_for('validate', student_username=app.username, action='approve') }}">Approve</a> | 
+                    <a href="{{ url_for('validate', student_username=app.username, action='reject') }}">Reject</a>
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No applications found.</p>
+{% endif %}
+{% endblock %}
